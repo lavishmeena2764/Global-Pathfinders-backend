@@ -1,5 +1,6 @@
 import express from 'express';
 import { v2 as cloudinary } from "cloudinary";
+import fs from 'fs';
 const app = express();
 import {
   response_200,
@@ -37,7 +38,7 @@ export async function newEvent(req, res) {
       img: result.url
     });
     const finalResult = await event.save();
-    console.log(finalResult)
+    fs.unlinkSync(img.path);
     return res.json({ event: finalResult });
   } catch (error) {
     console.error(error);
